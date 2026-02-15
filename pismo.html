@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pismo Zate</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: #fff4f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Slide transition effect */
+    .page-transition {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: #ee9ca7;
+      z-index: 10;
+      transition: left 0.8s ease;
+    }
+
+    .page-transition.active {
+      left: 0;
+    }
+
+    .letter-box {
+      background: white;
+      padding: 40px;
+      max-width: 600px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      animation: fadeIn 1.2s ease;
+      line-height: 1.7;
+      font-size: 1.15rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .back-btn {
+      margin-bottom: 15px;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      background: #ee9ca7;
+      color: white;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: 0.2s;
+    }
+
+    .back-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    #letter-content p {
+      margin: 0 0 1rem 0;
+    }
+
+    .typing::after {
+      content: "|";
+      display: inline-block;
+      margin-left: 6px;
+      opacity: 1;
+      animation: blink 1s steps(1) infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-transition" id="transition"></div>
+
+  <div class="letter-box">
+    <div class="controls">
+      <button class="back-btn" onclick="goBack()">⬅ Nazaj</button>
+      <button class="back-btn" id="skipBtn">Preskoči</button>
+    </div>
+
+    <h2>Ljubezen moja ❤️</h2>
+
+    <!-- vsebina se bo izpisala sem -->
+    <div id="letter-content" aria-live="polite"></div>
+  </div>
+
+  <script>
+    // Tekst pisma (lahko urejaš tukaj)
+    const paragraphs = [
+      "Draga Maja, kot prvo ti želim poovedati, da te imam najraše na svetu in si res ne predstavljam da bi s komerkoli drugim delil svoje življenje.",
+      "Hvala ti za dve najlepši leti mojega življenja in za vse lepe trenutke, ki sva jih preživela skupaj.",
+      "Šekar se spomnim ko sva prvič šla skupej vn in ne samo tega kar sva delala, ampak tudi tko ker sva se tudi takoj pokontala. Mogoče nisem niti pričakoval da se bo vse tako izšlo ampak sem res vesel da se je.",
+      "Vem da ti grem včasih komadno na kurac, samo hočem ti povedati, da se bom res potrudil in delal na tem, da spremnenim svoje obnašanje in da nebom več delal teh glupih stvari ki sem jih zadnne čase.",
+      "Res te imam rad",
+      "Ljubim te ❤️",
+      "Tvoj Aljaž",
+      "\n\nP.S. sedaj pa te čaka tvoje darilo!"
+    ];
+
+    const contentEl = document.getElementById('letter-content');
+    const skipBtn = document.getElementById('skipBtn');
+    let paraIndex = 0;
+    let charIndex = 0;
+    let timer = null;
+    let typing = true;
+
+    function typeNext() {
+      if (paraIndex >= paragraphs.length) {
+        typing = false;
+        return;
+      }
+
+      if (charIndex === 0) {
+        const p = document.createElement('p');
+        p.className = 'typing';
+        contentEl.appendChild(p);
+      }
+
+      const pEl = contentEl.lastElementChild;
+      const text = paragraphs[paraIndex];
+      pEl.textContent += text.charAt(charIndex);
+      charIndex++;
+
+      if (charIndex < text.length) {
+        const delay = 25 + Math.random() * 40; // malo naravnostipnega pisanja
+        timer = setTimeout(typeNext, delay);
+      } else {
+        // končana vrstica
+        pEl.classList.remove('typing');
+        paraIndex++;
+        charIndex = 0;
+        timer = setTimeout(typeNext, 550); // premor med odstavki
+      }
+    }
+
+    function startTyping() {
+      contentEl.innerHTML = '';
+      paraIndex = 0;
+      charIndex = 0;
+      typing = true;
+      clearTimeout(timer);
+      typeNext();
+    }
+
+    function showFull() {
+      clearTimeout(timer);
+      typing = false;
+      contentEl.innerHTML = paragraphs.map(p => `<p>${p}</p>`).join('');
+    }
+
+    skipBtn.addEventListener('click', showFull);
+
+    // navigacija nazaj z animacijo
+    function goBack() {
+      const t = document.getElementById('transition');
+      t.classList.add('active');
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 800);
+    }
+
+    // start on load
+    window.addEventListener('DOMContentLoaded', startTyping);
+  </script>
+
+</body>
+</html>

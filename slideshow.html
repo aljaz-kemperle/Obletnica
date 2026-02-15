@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Najine Slike</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: #fce9ef;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .slideshow-container {
+      width: 90%;
+      max-width: 600px;
+      position: relative;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      background: #fce9ef;
+      transition: height 0.8s ease-in-out;
+    }
+
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+    }
+
+    .slide img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .active {
+      opacity: 1;
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.8);
+      cursor: pointer;
+      font-size: 1rem;
+      backdrop-filter: blur(5px);
+    }
+  </style>
+</head>
+<body>
+
+  <button class="back-btn" onclick="window.location.href='index.html'">⬅ Nazaj</button>
+
+  <div class="slideshow-container">
+    <div class="slide active">
+      <img src="images/slika1.jpeg" alt="Slika 1" />
+    </div>
+    <div class="slide">
+      <img src="images/slika2.jpeg" alt="Slika 2" />
+    </div>
+    <div class="slide">
+      <img src="images/slika3.jpeg" alt="Slika 3" />
+    </div>
+    <div class="slide">
+      <img src="images/slika4.jpeg" alt="Slika 3" />
+    </div>
+    <div class="slide">
+      <img src="images/slika5.JPEG" alt="Slika 3" />
+    </div>
+    <div class="slide">
+      <img src="images/slika6.JPEG" alt="Slika 3" />
+    </div>
+    <div class="slide">
+      <img src="images/slika7.JPEG" alt="Slika 3" />
+    </div>
+    <div class="slide">
+      <img src="images/slika8.JPEG" alt="Slika 3" />
+    </div>
+    <div class="slide">
+      <img src="images/slika9.JPEG" alt="Slika 3" />
+    </div>
+    <div class="slide">
+      <img src="images/slika10.JPEG" alt="Slika 3" />
+    </div>
+    <div class="slide">
+      <img src="images/slika11.JPEG" alt="Slika 3" />
+    </div>
+    <div class="slide">
+      <img src="images/slika12.JPEG" alt="Slika 3" />
+    </div>
+    <div class="slide">
+      <img src="images/slika13.JPEG" alt="Slika 3" />
+    </div>
+    <div class="slide">
+      <img src="images/slika14.JPEG" alt="Slika 3" />
+    </div>
+    <div class="slide">
+      <img src="images/slika15.JPEG" alt="Slika 3" />
+    </div>
+    <div class="slide">
+      <img src="images/slika16.JPEG" alt="Slika 3" />
+    </div>
+    <div class="slide">
+      <img src="images/slika17.JPEG" alt="Slika 3" />
+    </div>
+  </div>
+
+  <script>
+  let slideIndex = 0;
+  const slides = document.querySelectorAll('.slide');
+  const container = document.querySelector('.slideshow-container');
+
+  function setContainerHeight(index) {
+    const img = slides[index].querySelector('img');
+
+    const ratio = img.naturalHeight / img.naturalWidth;
+    const newHeight = container.clientWidth * ratio;
+
+    container.style.height = newHeight + "px";
+  }
+
+  function showSlides() {
+    let nextIndex = (slideIndex + 1) % slides.length;
+
+    // nastavi višino za naslednjo sliko PRED prehodom
+    setContainerHeight(nextIndex);
+
+    slides[slideIndex].classList.remove('active');
+    slides[nextIndex].classList.add('active');
+
+    slideIndex = nextIndex;
+  }
+
+  // počakaj da se vse slike naložijo
+  window.addEventListener("load", () => {
+    setContainerHeight(slideIndex);
+    setInterval(showSlides, 2000);
+  });
+</script>
+
+
+
+</body>
+</html>
