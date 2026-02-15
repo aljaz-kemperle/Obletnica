@@ -5,16 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tvoje darilo</title>
   <style>
-    body {
+   body {
       margin: 0;
-      padding: 0;
+      padding: 20px;
       font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      background: #fce9ef;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      color: #333;
+      min-height: 100vh;
+    }
+
+    @media (max-width: 600px) {
+      .slideshow-container {
+        width: 100%;
+        max-width: 100%;
+        min-height: 200px;
+
+      }
     }
     .card {
       background: white;
@@ -101,4 +109,5 @@
     }, 800);
   }
 </script>
+
 
