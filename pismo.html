@@ -7,14 +7,22 @@
   <style>
     body {
       margin: 0;
-      padding: 0;
+      padding: 20px;
       font-family: "Segoe UI", sans-serif;
-      background: #fff4f7;
+      background: #fce9ef;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      overflow: hidden;
+      min-height: 100vh;
+    }
+
+    @media (max-width: 600px) {
+      .slideshow-container {
+        width: 100%;
+        max-width: 100%;
+        min-height: 200px;
+
+      }
     }
 
     /* Slide transition effect */
@@ -184,4 +192,5 @@
   </script>
 
 </body>
+
 </html>
